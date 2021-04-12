@@ -1,0 +1,80 @@
+﻿
+@using Microsoft.AspNetCore.Components.Web
+@using ALIADO.GHT.Conectando.WebSite.Models
+@using ALIADO.GHT.Conectando.WebSite.Services
+@inject JsonFileLiveService LiveService
+
+
+<h2>Administación de video activo</h2>
+
+<h1>@heading</h1>
+<form method="post">
+    <button @onclick="@(e => heading = "New heading!!!")">
+        Update heading
+    </button>
+</form>
+
+
+
+
+
+<div class="form-group">
+    <form method="post">
+        <input type="text" @bind="newVideo.Title" name="title" placeholder="Título del video" />
+        <input type="text" @bind="newVideo.Description" name="description" placeholder="Descripción" />
+        <input type="text" @bind="newVideo.Maker" name="maker" placeholder="Editor" />
+        @*<input type="file" @bind="newVideo.Src" name="fileName" required  accept=".mp4" placeholder="Video en formato Mp4" />*@
+        <button @onclick="UploadNewLiveVideo" class="btn btn-primary">Cargar</button>
+    </form>
+</div>
+<div>
+    @foreach (var video in LiveService.GetLives())
+    {
+        <div class="modal-dialog modal-sm">
+            <video id="my-player"
+                   preload="auto"
+                   data-setup='{}'>
+                <source src="//vjs.zencdn.net/v/oceans.mp4" type="video/mp4" />
+                <source src="//vjs.zencdn.net/v/oceans.webm" type="video/webm" />
+                <source src="//vjs.zencdn.net/v/oceans.ogv" type="video/ogg" />
+
+            </video>
+        </div>
+        <div class="card-columns">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">@video.Title</h5>
+                    <ul class="card-body">
+                        <li>Descripción: @video.Description</li>
+                        <li>Editor de video: @video.Maker</li>
+                        <li>Fecha de publicación: @video.Upload</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    }
+</div>
+
+@code {
+
+    private string heading = "Initial heading";
+
+    Live newVideo = new Live();
+
+    void UploadNewLiveVideo()
+    {
+        newVideo.Upload = DateTime.Today.ToString();
+        LiveService.AddLiveVideo(newVideo);
+
+    }
+
+
+
+    //Live videoOnLine;
+
+    //void GetVideoOnLine()
+    //{
+    //    videoOnLine = LiveService.GetLives().First();
+    //}
+}

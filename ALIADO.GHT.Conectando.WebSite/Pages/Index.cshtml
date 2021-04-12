@@ -1,0 +1,16 @@
+﻿@page
+@using ALIADO.GHT.Conectando.WebSite.Components;
+@model IndexModel
+@{
+    ViewData["Title"] = "Inicio";
+}
+
+
+<div class="text-center">
+    <h1 class="text-light">Conectando con el Cliente</h1>
+</div>
+
+@(
+        await Html.RenderComponentAsync<VideoList>(RenderMode.ServerPrerendered)
+)
+

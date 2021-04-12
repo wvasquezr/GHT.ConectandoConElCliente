@@ -1,0 +1,69 @@
+﻿@page
+@model ALIADO.GHT.Conectando.WebSite.Pages.Home.SecuredModel
+@using ALIADO.GHT.Conectando.WebSite.Components;
+
+@{
+    ViewData["Title"] = "Administración de videos";
+}
+
+<h2>Hola @User.Identity.Name</h2>
+<ul>
+    @foreach (var c in User.Claims)
+    {
+        <li>@c.Type: @c.Value</li>
+
+    }
+</ul>
+
+<h2>Administación de video activo</h2>
+
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" action="" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="newVideo.Title" class="control-label"></label>
+                <input asp-for="newVideo.Title" class="form-control" />
+                <span asp-validation-for="newVideo.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="newVideo.Description" class="control-label"></label>
+                <input asp-for="newVideo.Description" class="form-control" />
+                <span asp-validation-for="newVideo.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="newVideo.Maker" class="control-label"></label>
+                <input asp-for="newVideo.Maker" class="form-control" />
+                <span asp-validation-for="newVideo.Maker" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Nuevo Video</label>
+                <input type="file" accept=".mp4" id="newVideoFile" name="newVideoFile" asp-for="newVideo.Src" required />
+                <span asp-validation-for="newVideo.Src" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+
+@*<div>
+        <h3>Cargue de nuevo video</h3>
+        <form method="post" enctype="multipart/form-data">
+            <dl>
+                <dt>
+                    <input type="text" asp-for="videoOnLine.Title" placeholder="Título" />
+                </dt>
+                <dd>
+                    <input asp-for="UploadedFile" type="file" accept="video/*|image/*" />
+                </dd>
+            </dl>
+            <input asp-page-handler="Upload" class="btn" type="submit" value="Subir video" />
+        </form>
+    </div>*@

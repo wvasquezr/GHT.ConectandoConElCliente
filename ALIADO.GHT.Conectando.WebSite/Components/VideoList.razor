@@ -1,0 +1,47 @@
+﻿@using Microsoft.AspNetCore.Components.Web
+@using ALIADO.GHT.Conectando.WebSite.Models
+@using ALIADO.GHT.Conectando.WebSite.Services
+@inject JsonFileVideoService VideoService
+
+<h3>VideoList</h3>
+
+<div class="card-columns">
+    @foreach (var video in VideoService.GetVideos())
+    {
+        <div class="card">
+            @*<div class="card-img">
+                <video id="my-player"
+                       preload="auto"
+                       controls
+                       poster="@video.PosterImg"
+                       data-setup='{}'>
+                    <source src="//vjs.zencdn.net/v/oceans.mp4" type="video/mp4" />
+                    <source src="//vjs.zencdn.net/v/oceans.webm" type="video/webm" />
+                    <source src="//vjs.zencdn.net/v/oceans.ogv" type="video/ogg" />
+
+                </video>
+            </div>*@
+            <div class="card-img" style="background-image: url('@video.PosterImg')"></div>
+            <div class="card-body">
+                <h5 class="card-title">@video.Title</h5>                
+                <ul class="card-body">
+                    <li>Descripción: @video.Description</li>
+                    <li>Editor de video: @video.Maker</li>
+                    <li>Fecha de publicación: @video.Upload</li>
+                </ul>
+            </div>
+        </div>
+       
+    }
+</div>
+
+@code {
+    Video selectedVideo;
+    string selectedVideoId;
+
+    void SelectVideo(string videoId)
+    {
+        selectedVideoId = videoId;
+        selectedVideo = VideoService.GetVideos().First(x => x.Id == videoId);
+    }
+}
